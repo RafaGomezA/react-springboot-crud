@@ -1,0 +1,655 @@
+openapi: 3.0.3
+
+info:
+  title: Employees Api
+  version: 1.0.0
+  description: Api for test spring boot project
+servers:
+  - url: http://localhost:8080
+    description: localhost 
+
+paths:
+######  - Empleados - ###### 
+  /employee:
+    get:
+      tags:
+        - employees
+      summary: Get All employees
+      description: Method for list all employees
+      operationId: getAllEmployees
+      responses: 
+        200:
+          description: "List of employees"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeDTO'
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: "NotFound"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: "Internal server Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - employees
+      summary: Save employees
+      description: Method for save employees
+      operationId: saveEmployees
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEmployeeDTO'
+      responses: 
+        200:
+          description: "Save employees"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeDTO'
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: "NotFound"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: "Internal server Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /employee/{id}:
+    get:
+      tags:
+        - employees
+      summary: Get employee by ID
+      description: Returns a single employee based on the provided ID
+      operationId: getEmployeeByID           #Nombre que genera en el controlador
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the employee 
+          schema:
+            type: string
+            format: uuid
+      responses: 
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/EmployeeDTO'
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: "NotFound"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: "Internal server Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - employees
+      summary: Delete employee by ID
+      description: Delete a single employee based on the provided ID.
+      operationId: deleteEmployeeById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the employee to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        204:
+          description: Not content
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: "NotFound"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+    put:    
+      tags:
+        - employees
+      summary: Update employee by ID
+      description: Update a single employee based on the provided ID
+      operationId: updateEmployeeByID           #Nombre que genera en el controlador
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the employee 
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEmployeeDTO'
+      responses:               
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeDTO'
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: "NotFound"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /employee/dni/{dni}:
+    get:
+      tags:
+        - employees
+      summary: Get employee by DNI
+      description: Returns a single employee based on the provided DNI
+      operationId: getEmployeeByDni           #Nombre que genera en el controlador
+      parameters:
+        - in: path
+          name: dni
+          required: true
+          description: DNI of the employee
+          schema:
+            type: string
+            pattern: "^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeDTO'
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: "NotFound"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: "Internal server Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+
+
+
+
+######  - Departamentos - ###### 
+  /department:
+    get:
+      tags:
+        - departments
+      summary: Get All department
+      description: Method for list all departments
+      operationId: getAllDepartments
+      responses: 
+        200:
+          description: "List of departments"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DepartmentDTO'
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: "NotFound"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: "Internal server Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - departments
+      summary: Save department
+      description: Method for save department
+      operationId: saveDepartment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepartmentDTO' 
+      responses: 
+        200:
+          description: "Save department"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentDTO'
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: "NotFound"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: "Internal server Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /department/{id}:
+    get:
+      tags:
+        - departments
+      summary: Get department by ID
+      description: Returns a single department based on the provided ID
+      operationId: getDepartmentByID           #Nombre que genera en el controlador
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the department 
+          schema:
+            type: string
+            format: uuid
+      responses: 
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/DepartmentDTO'
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: "NotFound"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: "Internal server Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - departments
+      summary: Delete department by ID
+      description: Delete a single department based on the provided ID.
+      operationId: deleteDepartmentById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the department to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        204:
+          description: Not content
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: "NotFound"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - departments
+      summary: Update department by ID
+      description: Update a single department based on the provided ID
+      operationId: updateDepartmentByID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID of the department
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepartmentDTO'
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentDTO'
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: "NotFound"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /department/name/{name}:
+    get:
+      tags:
+        - departments
+      summary: Get department by name
+      description: Returns a single department based on the provided name
+      operationId: getDepartmentByName           #Nombre que genera en el controlador
+      parameters:
+        - in: path
+          name: name
+          required: true
+          description: Name of the department
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentDTO'
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: "NotFound"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: "Internal server Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+ 
+                
+# Definición de la estructura de los datos que se envían y reciben
+components:
+  schemas:
+    EmployeeDTO: 
+      type: object
+      properties: 
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        middleName:
+          type: string  
+        lastName:
+          type: string
+        dni:
+          type: string
+          pattern: "^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$"
+          minLength: 9
+          maxLength: 9 
+        birthdate:
+          type: string
+
+        phone:
+          type: string   
+          pattern: "^[0-9]{9}$"
+          minLength: 9
+          maxLength: 9
+        email:
+          type: string
+          format: email 
+        department:
+          $ref: '#/components/schemas/DepartmentDTO'  # relaciona la propiedad con la clase department
+
+    CreateEmployeeDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        middleName:
+          type: string
+        lastName:
+          type: string
+        dni:
+          type: string
+          pattern: "^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$"
+          minLength: 9
+          maxLength: 9
+        birthdate:
+          type: string
+          format: date
+        phone:
+          type: string
+          pattern: "^[0-9]{9}$"
+          minLength: 9
+          maxLength: 9
+        email:
+          type: string
+          format: email
+        department:
+          type: string
+
+
+ 
+    DepartmentDTO:
+      type: object
+      properties: 
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+
+
+
+#Esquema de errores para los mensajes de error devueltos por la API:
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: number
+        dateTime:
+          type: string
+          format: date-time
+        className:
+          type: string
+        message:
+          type: string    
+
+# Defición de las diferentes etiquetas utilizadas
+tags:
+  - name: employees
+    description: Method for list all employees
+
+  - name: departments  
+    description: Method for list all departments

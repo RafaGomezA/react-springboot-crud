@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  mysql_employees:
+    image: mysql:latest
+    container_name: mysql_employees
+    restart: always
+    environment:
+      MYSQL_USER: 'admin'
+      MYSQL_PASSWORD: 'dejjib-hohwuz-2gybSo'
+      MYSQL_ROOT_PASSWORD: 'J53EnFrvIBqf'
+      MYSQL_ROOT_HOST: '%'
+    expose:
+      - 3311
+    ports:
+      - "3311:3306"
+    volumes:
+      - dbData:/var/lib/mysql
+
+volumes:
+  dbData:
+

@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: Employee
+  #Datasource
+  datasource:
+    # variables de entorno: DB.HOST=localhost;DB.NAME=airports;DB.PORT=3311
+    url: jdbc:mysql://${DB.HOST}:${DB.PORT}/${DB.NAME}?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: J53EnFrvIBqf
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  #Dialect
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+
+  #Controller advice
+  controller-advice:
+    global:
+      enabled: true
+  # Para los errores de CustomGlobalHandlerException
+
+#Swagger UI link to specify yaml
+springdoc:
+  swagger-ui:
+    url: /employees.yaml
+
+#http://localhost:8080/swagger-ui/index.html
